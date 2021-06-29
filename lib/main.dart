@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'form_novo_filme.dart';
-import 'listtile_filme.dart';
 import 'listview_filmes.dart';
 
 void main(){
@@ -13,7 +12,6 @@ class MyApp extends StatelessWidget{
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
-          //'/':(context) => ListTileFilmes(),
           '/':(context) => ListViewFilmes(),
           '/novo-filme': (context) => FormNovoFilme(),
         }

@@ -22,7 +22,7 @@ class _ListViewFilmesState extends State<ListViewFilmes>{
 
   Widget _buildFuture() {
     return FutureBuilder(
-        future: listFilmes(),
+        future: listarFilmes(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             this._filmes = snapshot.data as List<Filme>;

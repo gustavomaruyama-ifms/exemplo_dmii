@@ -8,24 +8,30 @@ const URL = 'lpiv-maruyama-backend.herokuapp.com';
 Future<Filme> buscarFilmePorId(int id) async{
   final response = await http.get(Uri.https(URL, 'ws/filme/$id'));
   if(response.statusCode == 200){
-    return Filme.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    final utf8Json = utf8.decode(response.bodyBytes);
+    Map<String, dynamic> mapFilme = jsonDecode(utf8Json);
+    Filme filme = Filme.fromJson(mapFilme);
+    return filme;
   }else{
     throw Exception(response.body);
   }
 }
 
-Future<List<Filme>> listFilmes() async{
+Future<List<Filme>> listarFilmes() async{
   final response = await http.get(Uri.https(URL, 'ws/filme'));
   if(response.statusCode == 200){
-    return compute(parseFilme, utf8.decode(response.bodyBytes));
+    final utf8Json = utf8.decode(response.bodyBytes);
+    return compute(parseFilmes, utf8Json);
   }else{
     throw Exception(response.body);
   }
 }
 
-List<Filme> parseFilme(String responseBody){
-  final parsed = jsonDecode(responseBody).cast<Map<String,dynamic>>();
-  return parsed.map<Filme>((json) => Filme.fromJson(json)).toList();
+List<Filme> parseFilmes(String responseBody){
+  final mapFilmes = jsonDecode(responseBody);
+  return mapFilmes.map<Filme>((mapJson){
+    return Filme.fromJson(mapJson);
+  }).toList();
 }
 
 Future<void> salvarFilme(filme) async{
